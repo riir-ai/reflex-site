@@ -93,8 +93,8 @@
       "date_utc": "2026-09-28T16:27:36Z"
      },
      "encoder": {
-      "git_sha": "d33fe17",
-      "date_utc": "2026-11-08T13:09:01Z"
+      "git_sha": "486e277",
+      "date_utc": "2026-11-16T08:35:17Z"
      },
      "bekko": {
       "git_sha": "e8328de",
@@ -18567,8 +18567,8 @@
      "full_teacher_acc": 0.9765
     },
     "source_run": {
-     "git_sha": "d33fe17",
-     "date_utc": "2026-11-08T13:09:01Z"
+     "git_sha": "486e277",
+     "date_utc": "2026-11-16T08:35:17Z"
     },
     "cases_digest": "fnv1a64-61e6ad438aadff5b"
    }
@@ -18723,27 +18723,27 @@
     "model": "ESC-composed H2+mammoth-1",
     "hard": {
      "n": 1267,
-     "accuracy": 0.7269139700078927
+     "accuracy": 0.797947908445146
     },
-    "serves": "ESC-composed (rho 0.45)",
-    "gate": "composed 0.7269 vs cheap 0.4830 (paired delta +0.2439, LB95 +0.2191) at escalation rate 51.1% (cal 52.0%, the armed rho 0.45 fit, thresholds score 0.000 / dist 0.538); full-teacher context 0.9605; escalation answers pay the think tier's latency (the teacher's local posture, p50 1.4-6.5 s/case) while the cheap tier answers in microseconds; accuracy-only cells (the composition latency was not re-measured in-run); the winogrande_jdi gain reads on the SAME population as every other lane on this row; contamination caveat: no shadow read covers this arm yet - public winogrande_jdi mammoth-training unverified, the gain is benchmark-conditioned until an independent paraphrase or real-traffic read says otherwise",
+    "serves": "ESC-composed (rho 0.60)",
+    "gate": "composed 0.7979 vs cheap 0.4830 (paired delta +0.3149, LB95 +0.2881) at escalation rate 66.1% (cal 62.5%, the armed rho 0.60 fit, thresholds score 0.000 / dist 0.647); full-teacher context 0.9605; escalation answers pay the think tier's latency (the teacher's local posture, p50 1.4-6.5 s/case) while the cheap tier answers in microseconds; accuracy-only cells (the composition latency was not re-measured in-run); the winogrande_jdi gain reads on the SAME population as every other lane on this row; contamination caveat: no shadow read covers this arm yet - public winogrande_jdi mammoth-training unverified, the gain is benchmark-conditioned until an independent paraphrase or real-traffic read says otherwise",
     "esc": {
-     "rho": 0.45,
+     "rho": 0.6,
      "thresholds": {
       "score": 0.0,
-      "distance": 0.5376397371292114
+      "distance": 0.6466401219367981
      },
-     "cal_rate": 0.52,
-     "test_rate": 0.5114443567482242,
+     "cal_rate": 0.625,
+     "test_rate": 0.6614048934490924,
      "cheap_acc": 0.48303078137332284,
-     "composed_acc": 0.7269139700078927,
-     "delta": 0.24388318863456984,
-     "paired_lb95": 0.21913990032211578,
+     "composed_acc": 0.797947908445146,
+     "delta": 0.3149171270718232,
+     "paired_lb95": 0.28814202351085466,
      "full_teacher_acc": 0.9605367008681925
     },
     "source_run": {
-     "git_sha": "d33fe17",
-     "date_utc": "2026-11-08T13:09:01Z"
+     "git_sha": "486e277",
+     "date_utc": "2026-11-16T08:35:17Z"
     },
     "cases_digest": "fnv1a64-293400e84e987360"
    }
@@ -18867,7 +18867,7 @@
      "reasoning": 0.409741,
      "decisions": 0.369963
     },
-    "index": 0.537712,
+    "index": 0.537711,
     "coverage": {
      "suites": 8,
      "of": 8
@@ -19041,7 +19041,7 @@
      "reasoning": 0.593276,
      "decisions": 0.625641
     },
-    "index": 0.564171,
+    "index": 0.56417,
     "coverage": {
      "suites": 8,
      "of": 8
@@ -19100,7 +19100,7 @@
      "reasoning": 0.593276,
      "decisions": 0.625641
     },
-    "index": 0.564171,
+    "index": 0.56417,
     "coverage": {
      "suites": 8,
      "of": 8
