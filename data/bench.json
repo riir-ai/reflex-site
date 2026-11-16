@@ -230,6 +230,31 @@
      }
     },
     "spec": "Apple Mac Studio (M5 Ultra), 96 GB unified memory, macOS - the mammoth-1 27B teacher self-hosted on Metal (bf16 MPS, sequential fork)"
+   },
+   {
+    "host": "amo",
+    "date_utc": "2026-11-16T08:35:17Z",
+    "git_sha": "486e277",
+    "profile": "release",
+    "laya_feature": true,
+    "absent_suites": [
+     "typed_decisions",
+     "ag_news",
+     "emotion",
+     "sst5",
+     "prompt_injections",
+     "xnli_en",
+     "massive_intent_en",
+     "banking77",
+     "thai_wisesight",
+     "thai_sib200",
+     "s1mb_choice",
+     "s1mb_noul",
+     "s1mb_score",
+     "semantic_defects",
+     "anli_jdi",
+     "mmlupro_jdi"
+    ]
    }
   ],
   "head_posture": "OFF (head_scale 0 \u2014 the published baseline posture)",
@@ -18541,6 +18566,37 @@
        "date_utc": "2026-11-01T21:26:31Z"
       }
      }
+    },
+    "amo": {
+     "encoder": {
+      "lane": "Rethink",
+      "model": "ESC-composed H2+mammoth-1",
+      "hard": {
+       "n": 2000,
+       "accuracy": 0.3995
+      },
+      "serves": "ESC-composed (rho 0.10)",
+      "gate": "composed 0.3995 vs cheap 0.2565 (paired delta +0.1430, LB95 +0.1277) at escalation rate 19.8% (cal 12.0%, the armed rho 0.10 fit, thresholds score 0.000 / dist 0.306); full-teacher context 0.9765; escalation answers pay the think tier's latency (the teacher's local posture, p50 1.4-6.5 s/case) while the cheap tier answers in microseconds; accuracy-only cells (the composition latency was not re-measured in-run); the hellaswag_jdi gain reads on the SAME population as every other lane on this row; contamination caveat: no shadow read covers this arm yet - public hellaswag_jdi mammoth-training unverified, the gain is benchmark-conditioned until an independent paraphrase or real-traffic read says otherwise",
+      "esc": {
+       "rho": 0.1,
+       "thresholds": {
+        "score": 0.0,
+        "distance": 0.30568015575408936
+       },
+       "cal_rate": 0.12,
+       "test_rate": 0.198,
+       "cheap_acc": 0.2565,
+       "composed_acc": 0.3995,
+       "delta": 0.143,
+       "paired_lb95": 0.12765382580254309,
+       "full_teacher_acc": 0.9765
+      },
+      "source_run": {
+       "git_sha": "486e277",
+       "date_utc": "2026-11-16T08:35:17Z"
+      },
+      "cases_digest": "fnv1a64-61e6ad438aadff5b"
+     }
     }
    },
    "encoder": {
@@ -18716,6 +18772,37 @@
        "date_utc": "2026-11-02T00:45:50Z"
       }
      }
+    },
+    "amo": {
+     "encoder": {
+      "lane": "Rethink",
+      "model": "ESC-composed H2+mammoth-1",
+      "hard": {
+       "n": 1267,
+       "accuracy": 0.797947908445146
+      },
+      "serves": "ESC-composed (rho 0.60)",
+      "gate": "composed 0.7979 vs cheap 0.4830 (paired delta +0.3149, LB95 +0.2881) at escalation rate 66.1% (cal 62.5%, the armed rho 0.60 fit, thresholds score 0.000 / dist 0.647); full-teacher context 0.9605; escalation answers pay the think tier's latency (the teacher's local posture, p50 1.4-6.5 s/case) while the cheap tier answers in microseconds; accuracy-only cells (the composition latency was not re-measured in-run); the winogrande_jdi gain reads on the SAME population as every other lane on this row; contamination caveat: no shadow read covers this arm yet - public winogrande_jdi mammoth-training unverified, the gain is benchmark-conditioned until an independent paraphrase or real-traffic read says otherwise",
+      "esc": {
+       "rho": 0.6,
+       "thresholds": {
+        "score": 0.0,
+        "distance": 0.6466401219367981
+       },
+       "cal_rate": 0.625,
+       "test_rate": 0.6614048934490924,
+       "cheap_acc": 0.48303078137332284,
+       "composed_acc": 0.797947908445146,
+       "delta": 0.3149171270718232,
+       "paired_lb95": 0.28814202351085466,
+       "full_teacher_acc": 0.9605367008681925
+      },
+      "source_run": {
+       "git_sha": "486e277",
+       "date_utc": "2026-11-16T08:35:17Z"
+      },
+      "cases_digest": "fnv1a64-293400e84e987360"
+     }
     }
    },
    "encoder": {
@@ -18867,7 +18954,7 @@
      "reasoning": 0.409741,
      "decisions": 0.369963
     },
-    "index": 0.537712,
+    "index": 0.537711,
     "coverage": {
      "suites": 8,
      "of": 8
@@ -19041,7 +19128,7 @@
      "reasoning": 0.593276,
      "decisions": 0.625641
     },
-    "index": 0.564171,
+    "index": 0.56417,
     "coverage": {
      "suites": 8,
      "of": 8
@@ -19100,7 +19187,7 @@
      "reasoning": 0.593276,
      "decisions": 0.625641
     },
-    "index": 0.564171,
+    "index": 0.56417,
     "coverage": {
      "suites": 8,
      "of": 8
