@@ -16,6 +16,7 @@
   --ok:#4ade80; --warn:#fbbf24; --bad:#f87171; --info:#60a5fa;
   /* product accents — one per site, the family bar uses all of them */
   --c-ai:#5cc8e8; --c-reflex:#ff8a3d; --c-refine:#3fd68a; --c-rethink:#a98bfa; --c-instinct:#f472b6;
+  --c-reframe:#a3e635;
   /* the page's own accent (set per site via data-product) */
   --accent:var(--c-ai); --accent-ink:#06121a;
   --accent-soft:color-mix(in srgb,var(--accent) 13%,transparent);
@@ -38,6 +39,7 @@ html[data-product="ai"]{--accent:var(--c-ai);--accent-ink:#06121a}
 html[data-product="reflex"]{--accent:var(--c-reflex);--accent-ink:#1a0d03}
 html[data-product="refine"]{--accent:var(--c-refine);--accent-ink:#03140b}
 html[data-product="rethink"]{--accent:var(--c-rethink);--accent-ink:#120a24}
+html[data-product="reframe"]{--accent:var(--c-reframe);--accent-ink:#0f1403}
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:72px}
 body{margin:0;background:var(--bg);color:var(--text);font:400 var(--fs-1)/1.65 var(--sans);overflow-wrap:break-word;-webkit-font-smoothing:antialiased}
