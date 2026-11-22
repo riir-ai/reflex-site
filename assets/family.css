@@ -73,6 +73,7 @@ hr{border:0;border-top:1px solid var(--line);margin:var(--s-6) 0}
 .gf-bar a.gf-p[aria-current]{color:var(--text);background:var(--surface-2)}
 .gf-bar .gf-ai{--dot:var(--c-ai)} .gf-bar .gf-reflex{--dot:var(--c-reflex)}
 .gf-bar .gf-refine{--dot:var(--c-refine)} .gf-bar .gf-rethink{--dot:var(--c-rethink)}
+.gf-bar .gf-reframe{--dot:var(--c-reframe)}
 .gf-bar .gf-tag{margin-left:auto;color:var(--faint);padding-left:var(--s-3)}
 
 /* site header */
