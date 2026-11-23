@@ -1407,6 +1407,71 @@ def compute_abstention(d):
 S1MB_SUITES = ("s1mb_noul", "s1mb_score", "s1mb_choice")
 
 
+def compute_ordinal(d):
+    """Emit d["ordinal"] — Issue 132 A3's republish half: per lane, the
+    ordinal arena metrics (KS_sim / TV / Spearman / n_cases) over the
+    lane's PRIMARY-HOST ordinal-suite cells (sst5, sst5_syn — the
+    harness's own ordinal arm list is the ONE membership home). The read
+    walks every suite row's primary lane cells and only READS the cell's
+    `ordinal` field (stamped by the harness at run time, skip-when-None:
+    a predating run serializes nothing). A lane with no ordinal cells is
+    ABSENT from the block — never a zero. Host mirrors live nested under
+    extra_host_lanes and never match (they duplicate the primary run).
+
+    Idempotent under --rederive: the block is dropped and rebuilt
+    wholesale from the same cells (read-only, the byte-guard's
+    measurement identity untouched)."""
+    d.pop("ordinal", None)
+    cells_by_lane = {}
+    for s in d.get("suites", []):
+        name = s.get("name")
+        if not name:
+            continue
+        for k, v in s.items():
+            if not isinstance(v, dict) or "hard" not in v or "lane" not in v:
+                continue
+            if v.get("derived"):
+                continue
+            if not isinstance(v.get("ordinal"), dict):
+                continue
+            cells_by_lane.setdefault(k, {})[name] = v["ordinal"]
+    out = {}
+    for cls in sorted(cells_by_lane):
+        cells = cells_by_lane[cls]
+        rows = []
+        for suite, o in sorted(cells.items()):
+            rows.append({
+                "suite": suite,
+                "ks_sim": o.get("ks_sim"),
+                "tv": o.get("tv"),
+                "spearman": o.get("spearman"),
+                "spearman_ci95": o.get("spearman_ci95"),
+                "n_cases": o.get("n_cases"),
+            })
+        out[cls] = {
+            "suites": rows,
+            "suites_covered": len(rows),
+            "mean_ks_sim": (round(sum(r["ks_sim"] for r in rows
+                                       if r["ks_sim"] is not None)
+                                   / sum(1 for r in rows
+                                         if r["ks_sim"] is not None), 6)
+                            if any(r["ks_sim"] is not None for r in rows)
+                            else None),
+        }
+    if out:
+        d["ordinal"] = {
+            "version": 1,
+            "lanes": out,
+            "scope": ("per-lane ordinal arena metrics over the primary "
+                      "host's own ordinal-suite cells (sst5, sst5_syn); "
+                      "the harness stamps the `ordinal` field on the "
+                      "lane's results at run time (Issue 132 Item A), so "
+                      "lanes/runs predating the field are absent — never "
+                      "zeros"),
+        }
+    return d["ordinal"]
+
+
 def compute_s1mb(d):
     """Emit d["s1mb"] — the three-lane S1MB board. Lanes read the suite
     rows: reflex = the modelless cell (primary host), instinct = the
@@ -3249,6 +3314,10 @@ def finalize(d):
     # READS cell fields (abstain_causes), never writes one, so the rederive
     # byte-guard's measurement identity is untouched.
     compute_abstention(d)
+    # Issue 132 A3's republish half: the per-lane ordinal arena metrics
+    # (read-only over the cells'  field — the rederive byte-guard
+    # is untouched).
+    compute_ordinal(d)
     # The plan-011 C3 crosswalk (after the fallback derivation — derived
     # cells are excluded by construction, and the digest pin reads the
     # final cells): replaces the block wholesale (idempotent under
