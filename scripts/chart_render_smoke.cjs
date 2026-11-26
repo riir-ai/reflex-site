@@ -682,10 +682,14 @@ console.log(`[frontier] ${fDots} dots, ${fPartial} partial, ${fTPartial} timing-
   delete A.lanes.python.per_suite.emotion;
   A.lanes.python.coverage = { suites: 7, of: 8 };
   A.lanes.python.complete = false;
-  // the regression's inconsistent state, faithfully: a published index
-  // computed over MORE suites than the lane carries (0.5642 over 7 cells
-  // — the value that drew the user's wtf on the live site)
-  A.lanes.python.index = 0.564171;
+  // published indices must AGREE (the 2026-10-11 board re-basis made the
+  // python and rust indices equal; the mark exists for a real gap, and a
+  // fresh derived-block refresh moves both lanes together — pin the
+  // precondition, never a historical constant)
+  if (Math.abs(A.lanes.python.index - A.lanes.laya.index) >= 1e-9) {
+    die(`precondition lost: published python (${A.lanes.python.index}) and rust (${A.lanes.laya.index}) indices must agree for this fire-path pin`);
+  }
+  A.lanes.python.index = A.lanes.laya.index;
   fakeEl("frontier-syn");
   window.BenchCharts.frontier(dSyn, captured["frontier-syn"]);
   const syn = captured["frontier-syn"].innerHTML;

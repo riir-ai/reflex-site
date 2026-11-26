@@ -1428,7 +1428,22 @@ def compute_ordinal(d):
         if not name:
             continue
         for k, v in s.items():
-            if not isinstance(v, dict) or "hard" not in v or "lane" not in v:
+            if not isinstance(v, dict):
+                continue
+            # The laya CLASS is a dict of checkpoint cells — descend (the
+            # i132 first-publish gap: the flat walk saw no hard/lane at
+            # class level and skipped the whole lane, so a laya ordinal
+            # cell could never render; found by the i132 dry run).
+            if k == "laya" and "hard" not in v:
+                carry = [(ck, cell) for ck, cell in sorted(v.items())
+                         if isinstance(cell, dict) and "hard" in cell
+                         and "lane" in cell and not cell.get("derived")
+                         and isinstance(cell.get("ordinal"), dict)]
+                for ck, cell in carry:
+                    row_name = name if len(carry) == 1 else f"{name}/{ck}"
+                    cells_by_lane.setdefault(k, {})[row_name] = cell["ordinal"]
+                continue
+            if "hard" not in v or "lane" not in v:
                 continue
             if v.get("derived"):
                 continue
@@ -1465,9 +1480,8 @@ def compute_ordinal(d):
             "scope": ("per-lane ordinal arena metrics over the primary "
                       "host's own ordinal-suite cells (sst5, sst5_syn); "
                       "the harness stamps the `ordinal` field on the "
-                      "lane's results at run time (Issue 132 Item A), so "
-                      "lanes/runs predating the field are absent — never "
-                      "zeros"),
+                      "lane's results at run time, so lanes and runs "
+                      "predating the field are absent — never zeros"),
         }
     # No ordinal cells anywhere -> the block stays ABSENT (the house
     # law: absent, never zeros); return None, never raise (the

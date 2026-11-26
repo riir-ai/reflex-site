@@ -2960,7 +2960,50 @@ def case_abstention_rollup_is_idempotent():
     assert first == second
 
 
+def case_ordinal_block_renders_from_laya_checkpoint_cells():
+    """Issue 132 A3 + the descent-gap fix: compute_ordinal must read the
+    laya CLASS's CHECKPOINT cells (the flat walk saw no hard/lane at class
+    level and skipped the whole lane — found by the i132 dry run). A
+    laya-carrying ordinal cell renders a `laya` lane row; the modelless
+    lane without an ordinal stamp stays absent from the block (never a
+    zero), and a multi-checkpoint suite qualifies its row names."""
+    ordm = {"ks_sim": 0.855, "tv": 0.2, "spearman": 0.15,
+            "spearman_ci95": [0.07, 0.23], "n_cases": 5}
+    ordl = {"ks_sim": 0.7, "tv": 0.3, "spearman": 0.76,
+            "spearman_ci95": [0.72, 0.8], "n_cases": 5}
+    d = doc("m3", "abc1234", {"sst5": {"modelless_acc": 0.4, "laya_p50": 14.0}})
+    d["suites"][0]["modelless"]["ordinal"] = dict(ordm)
+    d["suites"][0]["laya"]["laya-riir"]["ordinal"] = dict(ordl)
+    d["suites"][0]["laya"]["laya-riir"]["hard"] = {"accuracy": 0.37}
+    out = pb.compute_ordinal(copy.deepcopy(d))
+    assert isinstance(out, dict) and out.get("version") == 1
+    lanes = out["lanes"]
+    assert set(lanes.keys()) == {"laya", "modelless"}, lanes.keys()
+    assert lanes["modelless"]["suites"][0]["suite"] == "sst5"
+    assert lanes["modelless"]["suites"][0]["ks_sim"] == 0.855
+    assert lanes["laya"]["suites"][0]["suite"] == "sst5"
+    assert lanes["laya"]["suites"][0]["spearman"] == 0.76
+    assert lanes["laya"]["mean_ks_sim"] == 0.7
+
+    # Absence law: an ordinal-free doc keeps the block ABSENT, never zeros.
+    out2 = pb.compute_ordinal(copy.deepcopy(doc("m3", "abc1234", {"sst5": {"modelless_acc": 0.4}})))
+    assert out2 is None
+
+    # Multi-checkpoint qualification: two ordinal-carrying checkpoints on
+    # one suite name their rows suite/checkpoint.
+    d3 = doc("m3", "abc1234", {"typed_decisions": {"laya_p50": 20.0}})
+    td = d3["suites"][0]["laya"]
+    for ck in ("english", "typed"):
+        td[ck] = {"lane": "laya-riir", "hard": {"accuracy": 0.5},
+                  "ordinal": dict(ordl)}
+    td.pop("laya-riir", None)
+    out3 = pb.compute_ordinal(copy.deepcopy(d3))
+    names = sorted(r["suite"] for r in out3["lanes"]["laya"]["suites"])
+    assert names == ["typed_decisions/english", "typed_decisions/typed"], names
+
+
 CASES = [
+    case_ordinal_block_renders_from_laya_checkpoint_cells,
     case_fallback_cells_close_product_lane_holes,
     case_fallback_cells_need_a_measurable_source,
     case_displaced_losing_records_show_the_served_answer,

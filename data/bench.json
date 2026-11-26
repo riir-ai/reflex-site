@@ -57,8 +57,8 @@
       "date_utc": "2026-10-10T06:52:15Z"
      },
      "laya:english": {
-      "git_sha": "8ca8770",
-      "date_utc": "2026-10-02T12:01:18Z"
+      "git_sha": "c82b011f",
+      "date_utc": "2026-11-26T01:29:27Z"
      },
      "laya:multilingual": {
       "git_sha": "5ada17a",
@@ -6734,6 +6734,7 @@
       "n": 600,
       "accuracy": 0.37166666666666665,
       "macro_f1": 0.32915341205482057,
+      "positive_f1": 0.0,
       "ece": 0.2477898333333333,
       "brier": 0.8171809703500024,
       "nll": 1.729144921851138,
@@ -6743,8 +6744,10 @@
       "acc_at_80_coverage": 0.4041666666666667
      },
      "readout_ece": 0.08109283333333335,
+     "readout_brier": 0.22282314455000005,
      "raw_abstain": null,
      "calibrated_abstain": null,
+     "abstain_causes": null,
      "readout_ece_raw": null,
      "readout_ece_calibrated": null,
      "floor_ece": null,
@@ -6755,16 +6758,27 @@
      "brier_soft": null,
      "score_mae": null,
      "within_1": null,
-     "latency_p50_ms": 18.0,
-     "latency_p99_ms": 24.0,
+     "ordinal": {
+      "ks_sim": 0.7000000000000001,
+      "tv": 0.30000000000000004,
+      "spearman": 0.7644535658173435,
+      "spearman_ci95": [
+       0.7260752256343318,
+       0.7991162433874592
+      ],
+      "n_cases": 600
+     },
+     "latency_p50_ms": 14.0,
+     "latency_p99_ms": 17.0,
      "latency_tail_support": 7,
      "latency_extremes": {
-      "first_ms": 14.0,
-      "max_ms": 26.0,
-      "argmax_case": 19
+      "first_ms": 15.0,
+      "max_ms": 18.0,
+      "argmax_case": 436
      },
      "determinism_ok": true,
-     "seconds": 14.787980458,
+     "determinism_n": 10,
+     "seconds": 12.306926125,
      "n_cases": 600,
      "n_questions": 600,
      "score_threshold": null,
@@ -6775,11 +6789,19 @@
      "nb_selection": null,
      "oc_selection": null,
      "ridge_selection": null,
+     "genome_selection": null,
      "transductive": null,
+     "bm25_floor": null,
      "confusion": null,
      "pair_head_ab": null,
+     "jdi_chance": 0.2733333333333333,
+     "jdi_skill": 0.1353211009174312,
      "cases_digest": "fnv1a64-ad64a6cb0039e916",
-     "latency_quotable": true
+     "latency_quotable": true,
+     "source_run": {
+      "git_sha": "c82b011f",
+      "date_utc": "2026-11-26T01:29:27Z"
+     }
     },
     "py/english": {
      "lane": "laya (python)",
@@ -18867,7 +18889,7 @@
      "reasoning": 0.409741,
      "decisions": 0.369963
     },
-    "index": 0.537711,
+    "index": 0.537712,
     "coverage": {
      "suites": 8,
      "of": 8
@@ -19041,7 +19063,7 @@
      "reasoning": 0.593276,
      "decisions": 0.625641
     },
-    "index": 0.56417,
+    "index": 0.564171,
     "coverage": {
      "suites": 8,
      "of": 8
@@ -19100,7 +19122,7 @@
      "reasoning": 0.593276,
      "decisions": 0.625641
     },
-    "index": 0.56417,
+    "index": 0.564171,
     "coverage": {
      "suites": 8,
      "of": 8
@@ -19683,7 +19705,7 @@
     "clock": "in-process",
     "method": "Rust in-process forward (device per host row: laya_device \u2014 metal/cuda/cpu)",
     "suites": 8,
-    "p50_geomean_ms": 30.9575,
+    "p50_geomean_ms": 30.0001,
     "n_used": 8,
     "n_unquotable": 0,
     "n_unjudged": 0,
@@ -19953,6 +19975,29 @@
    }
   },
   "scope": "per-lane abstain-cause rollups over the primary host's own cells, all suites (dataset + decision-set); counts are the harness's own abstain-cause stamps, never derived from rates; the harness stamps causes on the modelless lane's results (reflex a7475c7), so other lanes are absent here \u2014 never zeros"
+ },
+ "ordinal": {
+  "version": 1,
+  "lanes": {
+   "laya": {
+    "suites": [
+     {
+      "suite": "sst5",
+      "ks_sim": 0.7000000000000001,
+      "tv": 0.30000000000000004,
+      "spearman": 0.7644535658173435,
+      "spearman_ci95": [
+       0.7260752256343318,
+       0.7991162433874592
+      ],
+      "n_cases": 600
+     }
+    ],
+    "suites_covered": 1,
+    "mean_ks_sim": 0.7
+   }
+  },
+  "scope": "per-lane ordinal arena metrics over the primary host's own ordinal-suite cells (sst5, sst5_syn); the harness stamps the `ordinal` field on the lane's results at run time, so lanes and runs predating the field are absent \u2014 never zeros"
  },
  "crosswalk": {
   "caveat": "JDI-comparable crosswalk, NOT a JDI board row \u2014 different corpus, protocol caps, hardware; board membership requires their full frozen suite.",
