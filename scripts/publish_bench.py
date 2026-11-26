@@ -1469,7 +1469,11 @@ def compute_ordinal(d):
                       "lanes/runs predating the field are absent — never "
                       "zeros"),
         }
-    return d["ordinal"]
+    # No ordinal cells anywhere -> the block stays ABSENT (the house
+    # law: absent, never zeros); return None, never raise (the
+    # case_fresh_docs_wipe_refused fixture predates the field and is
+    # a legal doc).
+    return d.get("ordinal")
 
 
 def compute_s1mb(d):
